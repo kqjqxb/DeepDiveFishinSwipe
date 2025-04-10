@@ -13,18 +13,13 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CallEnSettingsScreen from './CallEnSettingsScreen';
-import CallEmSportsFactsScreen from './CallEmSportsFactsScreen';
+import DeepDiveAboutScreen from './DeepDiveAboutScreen';
 
 import CallEnTrainingsScreen from './CallEnTrainingsScreen';
 
 import LinearGradient from 'react-native-linear-gradient';
-import { ArrowLeftIcon, PlusCircleIcon } from 'react-native-heroicons/outline';
 
-const fontInterRegular = 'Inter-Regular';
-const fontOrbitronRegular = 'Orbitron-Regular';
-const fontOrbitronExtraBold = 'Orbitron-ExtraBold';
 const fontPixelifySansRegular = 'PixelifySans-Regular';
-
 const fontPlay = 'Play-Regular';
 
 const HomeScreen = () => {
@@ -32,80 +27,8 @@ const HomeScreen = () => {
   const [selectedCallEnScreenToSport, setSelectedCallEnScreenToSport] = useState('Home');
 
   const styles = createDeepDiveStyles(dimensions);
-  const [isCreatingWorkoutNow, setIsCreatingWorkoutNow] = useState(false);
   const [isSelectCategoryWasVisible, setIsSelectCategoryWasVisible] = useState(false);
-  const [selectedWorkoutCategory, setSelectedWorkoutCategory] = useState(null);
-
-  const [nameWorkout, setNameWorkout] = useState('');
-  const [repeatingWorkout, setRepeatingWorkout] = useState('');
-  const [executionTime, setExecutionTime] = useState('');
-  const [selectedRestTime, setSelectedRestTime] = useState('');
   const [ownedWorkouts, setOwnedWorkouts] = useState([]);
-
-  const [name, setName] = useState(null);
-
-  useEffect(() => {
-    const loadData = async () => {
-      try {
-        const savedName = await AsyncStorage.getItem('userName');
-
-        if (savedName !== null) {
-          setName(savedName);
-        }
-      } catch (error) {
-        console.error('Error loading name data', error);
-      }
-    };
-    loadData();
-  }, [selectedCallEnScreenToSport]);
-
-  const saveNewWorkout = async () => {
-    try {
-      const exOwnedWorkouts = await AsyncStorage.getItem('ownedWorkouts');
-      const ownedWorkouts = exOwnedWorkouts ? JSON.parse(exOwnedWorkouts) : [];
-      const newWorkoutIdentify = ownedWorkouts.length > 0 ? Math.max(...ownedWorkouts.map(newWorkout => newWorkout.id)) + 1 : 1;
-
-      const newWorkout = {
-        id: newWorkoutIdentify,
-        title: nameWorkout,
-        repeatingWorkout,
-        executionTime,
-        restTime: selectedRestTime,
-        workoutCategory: selectedWorkoutCategory,
-      };
-
-      ownedWorkouts.unshift(newWorkout);
-      await AsyncStorage.setItem('ownedWorkouts', JSON.stringify(ownedWorkouts));
-      setOwnedWorkouts(ownedWorkouts);
-
-      setNameWorkout('');
-      setRepeatingWorkout('');
-      setExecutionTime('');
-      setSelectedRestTime('');
-      setSelectedWorkoutCategory(null);
-      setIsSelectCategoryWasVisible(false);
-      setIsCreatingWorkoutNow(false);
-
-      setSelectedCallEnScreenToSport('Trainings');
-    } catch (error) {
-      console.error('Error saving newWorkout:', error);
-    }
-  };
-
-  useEffect(() => {
-    const loadOwnedWorkouts = async () => {
-      try {
-        const exOwnedWorkouts = await AsyncStorage.getItem('ownedWorkouts');
-        if (exOwnedWorkouts) {
-          setOwnedWorkouts(JSON.parse(exOwnedWorkouts));
-        }
-      } catch (error) {
-        console.error('Error loading ownedWorkouts:', error);
-      }
-    };
-
-    loadOwnedWorkouts();
-  }, [selectedCallEnScreenToSport]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -145,7 +68,7 @@ const HomeScreen = () => {
                 style={styles.gradientButtonsStyles}
 
                 onPress={() => {
-                  setIsSelectCategoryWasVisible(true);
+                  setSelectedCallEnScreenToSport('AboutDeepDive');
                 }}
               >
                 <LinearGradient
@@ -293,10 +216,10 @@ const HomeScreen = () => {
               ))}
             </View>
           </SafeAreaView>
-        ) : selectedCallEnScreenToSport === 'CallEnSettings' ? (
-          <CallEnSettingsScreen setSelectedCallEnScreenToSport={setSelectedCallEnScreenToSport} />
+        ) : selectedCallEnScreenToSport === 'AboutDeepDive' ? (
+          <DeepDiveAboutScreen setSelectedCallEnScreenToSport={setSelectedCallEnScreenToSport} />
         ) : selectedCallEnScreenToSport === 'SportsFacts' ? (
-          <CallEmSportsFactsScreen setSelectedCallEnScreenToSport={setSelectedCallEnScreenToSport} />
+          <DeepDiveAboutScreen setSelectedCallEnScreenToSport={setSelectedCallEnScreenToSport} />
         ) : selectedCallEnScreenToSport === 'Trainings' ? (
           <CallEnTrainingsScreen setSelectedCallEnScreenToSport={setSelectedCallEnScreenToSport} setOwnedWorkouts={setOwnedWorkouts} ownedWorkouts={ownedWorkouts} />
         ) : null}
