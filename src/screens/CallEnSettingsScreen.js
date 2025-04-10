@@ -5,7 +5,6 @@ import {
   Text,
   Dimensions,
   SafeAreaView,
-  ScrollView,
   StyleSheet,
   TouchableOpacity,
   Image,
@@ -16,8 +15,6 @@ import {
   Alert,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import * as ImagePicker from 'react-native-image-picker';
-import RNRestart from 'react-native-restart';
 
 const fontInterRegular = 'Inter-Regular';
 const fontOrbitronRegular = 'Orbitron-Regular';
@@ -56,16 +53,6 @@ const CallEnSettingsScreen = ({ savedMontPlacesReal, setSavedMontPlacesReal, }) 
     loadData();
   }, []);
 
-  const callEnClearAllSportAsyncStorage = async () => {
-    try {
-      await AsyncStorage.clear();
-      RNRestart.Restart();
-      console.log('AsyncStorage очищено');
-    } catch (error) {
-      console.error('Помилка при очищенні AsyncStorage', error);
-    }
-  };
-
   const saveData = async () => {
     try {
       await AsyncStorage.setItem('userName', name);
@@ -73,24 +60,6 @@ const CallEnSettingsScreen = ({ savedMontPlacesReal, setSavedMontPlacesReal, }) 
     } catch (error) {
       console.error('Error saving user data', error);
     }
-  };
-
-  const callHandleEnToSportImagePicker = () => {
-    ImagePicker.launchImageLibrary({ mediaType: 'photo' }, async (response) => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else {
-        const uri = response.assets[0].uri;
-        setImage(uri);
-        try {
-          await AsyncStorage.setItem('userImage', uri);
-        } catch (error) {
-          console.error('Error saving image in AsyncStorage: ', error);
-        }
-      }
-    });
   };
 
   const handleOutsidePress = () => {
@@ -152,7 +121,7 @@ const CallEnSettingsScreen = ({ savedMontPlacesReal, setSavedMontPlacesReal, }) 
             {!image || image === 'null' ? (
               <>
                 <TouchableOpacity
-                  onPress={callHandleEnToSportImagePicker}
+                  // onPress={callHandleEnToSportImagePicker}
                   style={{
                     width: dimensions.height * 0.12,
                     height: dimensions.height * 0.12,
@@ -417,7 +386,7 @@ const CallEnSettingsScreen = ({ savedMontPlacesReal, setSavedMontPlacesReal, }) 
                     },
                     {
                       text: "Delete",
-                      onPress: () => callEnClearAllSportAsyncStorage(),
+                      onPress: () => {},
                       style: "destructive"
                     }
                   ]
