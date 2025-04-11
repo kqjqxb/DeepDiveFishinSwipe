@@ -14,11 +14,6 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 
 const fontPixelifySansRegular = 'PixelifySans-Regular';
-const fontPlay = 'Play-Regular';
-
-const switchButtons = [
-
-]
 
 const DeepDiveSettingsScreen = ({ setSelectedDeepDiveScreen, selectedDeepDiveScreen }) => {
     const [dimensions, setDimensions] = useState(Dimensions.get('window'));

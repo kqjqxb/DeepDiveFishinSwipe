@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -14,6 +14,38 @@ import DeepDiveAboutScreen from './DeepDiveAboutScreen';
 
 import LinearGradient from 'react-native-linear-gradient';
 import DeepDiveSettingsScreen from './DeepDiveSettingsScreen';
+import DeepDiveShopScreen from './DeepDiveShopScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const deepBackgrounds = [
+  {
+    id: 1,
+    deepBg: require('../assets/images/deepBgs/bg1.png'),
+  },
+  {
+    id: 2,
+    deepBg: require('../assets/images/deepBgs/bg2.png'),
+  },
+  {
+    id: 3,
+    deepBg: require('../assets/images/deepBgs/bg3.png'),
+  },
+  {
+    id: 4,
+    deepBg: require('../assets/images/deepBgs/bg4.png'),
+  },
+]
+
+const fishSkins = [
+  {
+    id: 1,
+    fishSkin: require('../assets/images/fishSkins/fishSkin1.png'),
+  },
+  {
+    id: 2,
+    fishSkin: require('../assets/images/fishSkins/fishSkin2.png'),
+  },
+]
 
 const fontPixelifySansRegular = 'PixelifySans-Regular';
 const fontPlay = 'Play-Regular';
@@ -23,7 +55,43 @@ const HomeScreen = () => {
   const [selectedDeepDiveScreen, setSelectedDeepDiveScreen] = useState('Home');
 
   const styles = createDeepDiveStyles(dimensions);
-  const [ownedWorkouts, setOwnedWorkouts] = useState([]);
+
+  const [selectedDeepBackground, setSelectedDeepBackground] = useState(deepBackgrounds[0].deepBg);
+  const [userFishesAmount, setUserFishesAmount] = useState(0);
+  const [selectedFishesSkin, setSelectedFishSkin] = useState(1);
+
+  useEffect(() => {
+    const loadHomeData = async () => {
+      try {
+        const storedDeepBackground = await AsyncStorage.getItem('selectedDeepBackground');
+        if (storedDeepBackground !== null) {
+          setSelectedDeepBackground(JSON.parse(storedDeepBackground));
+        } else {
+          setSelectedDeepBackground(deepBackgrounds[0].deepBg);
+          await AsyncStorage.setItem('selectedDeepBackground', JSON.stringify(deepBackgrounds[0].deepBg));
+        }
+
+        const storedUserFishesAmount = await AsyncStorage.getItem('userFishesAmount');
+        if (storedUserFishesAmount !== null) {
+          setUserFishesAmount(JSON.parse(storedUserFishesAmount));
+        } else {
+          setUserFishesAmount(0);
+          await AsyncStorage.setItem('userFishesAmount', JSON.stringify(0));
+        }
+
+        const storedSelectedFishesSkin = await AsyncStorage.getItem('selectedFishesSkin');
+        if (storedSelectedFishesSkin !== null) {
+          setSelectedFishSkin(JSON.parse(storedSelectedFishesSkin));
+        } else {
+          setSelectedFishSkin(1);
+          await AsyncStorage.setItem('selectedFishesSkin', JSON.stringify(1));
+        }
+      } catch (error) {
+        console.error('Error loading home data:', error);
+      }
+    };
+    loadHomeData();
+  }, []);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -34,7 +102,7 @@ const HomeScreen = () => {
         flex: 1,
       }}>
         <Image
-          source={require('../assets/images/homeBg.png')}
+          source={selectedDeepBackground}
           style={{
             width: dimensions.width,
             height: dimensions.height,
@@ -114,7 +182,7 @@ const HomeScreen = () => {
                     color: '#fff',
                     marginRight: dimensions.width * 0.025,
                   }}>
-                  10
+                  {userFishesAmount ? userFishesAmount : 0}
                 </Text>
                 <Image
                   source={require('../assets/images/fishImage.png')}
@@ -224,9 +292,9 @@ const HomeScreen = () => {
         ) : selectedDeepDiveScreen === 'AboutDeepDive' ? (
           <DeepDiveAboutScreen setSelectedDeepDiveScreen={setSelectedDeepDiveScreen} />
         ) : selectedDeepDiveScreen === 'DeepDiveSettings' ? (
-          <DeepDiveSettingsScreen setSelectedDeepDiveScreen={setSelectedDeepDiveScreen} selectedDeepDiveScreen={selectedDeepDiveScreen}/>
-        ) : selectedDeepDiveScreen === 'Trainings' ? (
-          <CallEnTrainingsScreen setSelectedDeepDiveScreen={setSelectedDeepDiveScreen} setOwnedWorkouts={setOwnedWorkouts} ownedWorkouts={ownedWorkouts} />
+          <DeepDiveSettingsScreen setSelectedDeepDiveScreen={setSelectedDeepDiveScreen} selectedDeepDiveScreen={selectedDeepDiveScreen} />
+        ) : selectedDeepDiveScreen === 'Shop' ? (
+          <DeepDiveShopScreen setSelectedDeepDiveScreen={setSelectedDeepDiveScreen} selectedDeepBackground={selectedDeepBackground} setSelectedDeepBackground={setSelectedDeepBackground} deepBackgrounds={deepBackgrounds} fishSkins={fishSkins} setSelectedFishSkin={setSelectedFishSkin}/>
         ) : null}
       </View>
     </TouchableWithoutFeedback>
