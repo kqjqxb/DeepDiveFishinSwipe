@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -7,27 +7,22 @@ import {
   Dimensions,
   SafeAreaView,
   StyleSheet,
-  TextInput,
   TouchableWithoutFeedback,
   Keyboard,
 } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import CallEnSettingsScreen from './CallEnSettingsScreen';
 import DeepDiveAboutScreen from './DeepDiveAboutScreen';
 
-import CallEnTrainingsScreen from './CallEnTrainingsScreen';
-
 import LinearGradient from 'react-native-linear-gradient';
+import DeepDiveSettingsScreen from './DeepDiveSettingsScreen';
 
 const fontPixelifySansRegular = 'PixelifySans-Regular';
 const fontPlay = 'Play-Regular';
 
 const HomeScreen = () => {
   const [dimensions, setDimensions] = useState(Dimensions.get('window'));
-  const [selectedCallEnScreenToSport, setSelectedCallEnScreenToSport] = useState('Home');
+  const [selectedDeepDiveScreen, setSelectedDeepDiveScreen] = useState('Home');
 
   const styles = createDeepDiveStyles(dimensions);
-  const [isSelectCategoryWasVisible, setIsSelectCategoryWasVisible] = useState(false);
   const [ownedWorkouts, setOwnedWorkouts] = useState([]);
 
   return (
@@ -48,11 +43,22 @@ const HomeScreen = () => {
             left: 0,
             right: 0,
             bottom: 0,
-            zIndex: 0,
+            zIndex: -1,
           }}
           resizeMode='cover'
         />
-        {selectedCallEnScreenToSport === 'Home' ? (
+        <View style={{
+          width: dimensions.width,
+          height: dimensions.height,
+          backgroundColor: 'rgba(3, 63, 159, 0.45)',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          zIndex: 0,
+        }} />
+        {selectedDeepDiveScreen === 'Home' ? (
           <SafeAreaView style={{
             flex: 1,
             alignItems: 'center',
@@ -68,7 +74,7 @@ const HomeScreen = () => {
                 style={styles.gradientButtonsStyles}
 
                 onPress={() => {
-                  setSelectedCallEnScreenToSport('AboutDeepDive');
+                  setSelectedDeepDiveScreen('AboutDeepDive');
                 }}
               >
                 <LinearGradient
@@ -121,11 +127,10 @@ const HomeScreen = () => {
               </View>
 
               <TouchableOpacity
-
                 style={styles.gradientButtonsStyles}
 
                 onPress={() => {
-                  setIsSelectCategoryWasVisible(true);
+                  setSelectedDeepDiveScreen('DeepDiveSettings');
                 }}
               >
                 <LinearGradient
@@ -156,7 +161,7 @@ const HomeScreen = () => {
               resizeMode='contain'
             />
 
-            <TouchableOpacity style={[styles.gradientButtonsStyles, {marginTop: dimensions.height * 0.07}]}
+            <TouchableOpacity style={[styles.gradientButtonsStyles, { marginTop: dimensions.height * 0.07 }]}
               onPress={() => {
 
               }}
@@ -185,7 +190,7 @@ const HomeScreen = () => {
               {['Score', 'Shop'].map((item, index) => (
                 <TouchableOpacity
                   onPress={() => {
-                    setSelectedCallEnScreenToSport(item);
+                    setSelectedDeepDiveScreen(item);
                   }}
                   key={item}
                   style={[styles.gradientButtonsStyles, {
@@ -216,12 +221,12 @@ const HomeScreen = () => {
               ))}
             </View>
           </SafeAreaView>
-        ) : selectedCallEnScreenToSport === 'AboutDeepDive' ? (
-          <DeepDiveAboutScreen setSelectedCallEnScreenToSport={setSelectedCallEnScreenToSport} />
-        ) : selectedCallEnScreenToSport === 'SportsFacts' ? (
-          <DeepDiveAboutScreen setSelectedCallEnScreenToSport={setSelectedCallEnScreenToSport} />
-        ) : selectedCallEnScreenToSport === 'Trainings' ? (
-          <CallEnTrainingsScreen setSelectedCallEnScreenToSport={setSelectedCallEnScreenToSport} setOwnedWorkouts={setOwnedWorkouts} ownedWorkouts={ownedWorkouts} />
+        ) : selectedDeepDiveScreen === 'AboutDeepDive' ? (
+          <DeepDiveAboutScreen setSelectedDeepDiveScreen={setSelectedDeepDiveScreen} />
+        ) : selectedDeepDiveScreen === 'DeepDiveSettings' ? (
+          <DeepDiveSettingsScreen setSelectedDeepDiveScreen={setSelectedDeepDiveScreen} selectedDeepDiveScreen={selectedDeepDiveScreen}/>
+        ) : selectedDeepDiveScreen === 'Trainings' ? (
+          <CallEnTrainingsScreen setSelectedDeepDiveScreen={setSelectedDeepDiveScreen} setOwnedWorkouts={setOwnedWorkouts} ownedWorkouts={ownedWorkouts} />
         ) : null}
       </View>
     </TouchableWithoutFeedback>

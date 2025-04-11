@@ -7,17 +7,17 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    const loadCallEnToSportUser = async () => {
+    const loadDeepDiveUser = async () => {
       try {
-        const storedCallEnToSportUser = await AsyncStorage.getItem('currentUser');
-        if (storedCallEnToSportUser) {
-          setUser(JSON.parse(storedCallEnToSportUser));
+        const storedDeepDiveUser = await AsyncStorage.getItem('currentUser');
+        if (storedDeepDiveUser) {
+          setUser(JSON.parse(storedDeepDiveUser));
         }
       } catch (error) {
-        console.error('Error loading CallEnToSport user:', error);
+        console.error('Error loading storedDeepDiveUser user:', error);
       }
     };
-    loadCallEnToSportUser();
+    loadDeepDiveUser();
   }, []);
 
   return (

@@ -1,8 +1,8 @@
 import React from 'react';
-import CallEnToSportStack from './StackNavigator';
+import DeepDiveStack from './StackNavigator';
 
 function App() {
-  return <CallEnToSportStack />;
+  return <DeepDiveStack />;
 }
 
 export default App;
