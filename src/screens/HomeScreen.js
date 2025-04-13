@@ -16,6 +16,7 @@ import LinearGradient from 'react-native-linear-gradient';
 import DeepDiveSettingsScreen from './DeepDiveSettingsScreen';
 import DeepDiveShopScreen from './DeepDiveShopScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import DeepDiveGameScreen from './DeepDiveGameScreen';
 
 const deepBackgrounds = [
   {
@@ -231,7 +232,7 @@ const HomeScreen = () => {
 
             <TouchableOpacity style={[styles.gradientButtonsStyles, { marginTop: dimensions.height * 0.07 }]}
               onPress={() => {
-
+                setSelectedDeepDiveScreen('DeepDiveGame');
               }}
             >
               <LinearGradient
@@ -295,6 +296,8 @@ const HomeScreen = () => {
           <DeepDiveSettingsScreen setSelectedDeepDiveScreen={setSelectedDeepDiveScreen} selectedDeepDiveScreen={selectedDeepDiveScreen} />
         ) : selectedDeepDiveScreen === 'Shop' ? (
           <DeepDiveShopScreen setSelectedDeepDiveScreen={setSelectedDeepDiveScreen} selectedDeepBackground={selectedDeepBackground} setSelectedDeepBackground={setSelectedDeepBackground} deepBackgrounds={deepBackgrounds} fishSkins={fishSkins} setSelectedFishSkin={setSelectedFishSkin}/>
+        ) : selectedDeepDiveScreen === 'DeepDiveGame' ? (
+          <DeepDiveGameScreen setSelectedDeepDiveScreen={setSelectedDeepDiveScreen} selectedDeepBackground={selectedDeepBackground} setSelectedDeepBackground={setSelectedDeepBackground} deepBackgrounds={deepBackgrounds} fishSkins={fishSkins} setSelectedFishSkin={setSelectedFishSkin}/>
         ) : null}
       </View>
     </TouchableWithoutFeedback>
