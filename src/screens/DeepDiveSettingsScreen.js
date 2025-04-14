@@ -15,11 +15,10 @@ import LinearGradient from 'react-native-linear-gradient';
 
 const fontPixelifySansRegular = 'PixelifySans-Regular';
 
-const DeepDiveSettingsScreen = ({ setSelectedDeepDiveScreen, selectedDeepDiveScreen }) => {
+const DeepDiveSettingsScreen = ({ setSelectedDeepDiveScreen, selectedDeepDiveScreen, backgroundMusic, setBackgroundMusic}) => {
     const [dimensions, setDimensions] = useState(Dimensions.get('window'));
     const styles = createDeepDiveAboutStyles(dimensions);
-
-    const [backgroundMusic, setBackgroundMusic] = useState(false);
+    
     const [sounds, setSounds] = useState(false);
     const [notifications, setNotifications] = useState(false);
 
@@ -52,7 +51,7 @@ const DeepDiveSettingsScreen = ({ setSelectedDeepDiveScreen, selectedDeepDiveScr
     return (
         <SafeAreaView style={{ width: dimensions.width }}>
             <View
-                style={[styles.gradientButtonsStyles, {
+                style={[styles.deepGradientButtonsStyles, {
                     width: dimensions.width * 0.91,
                     height: dimensions.width * 0.14,
                     marginTop: dimensions.height * 0.015,
@@ -63,7 +62,7 @@ const DeepDiveSettingsScreen = ({ setSelectedDeepDiveScreen, selectedDeepDiveScr
                 }]}
             >
                 <LinearGradient
-                    style={[styles.deepOrangeGradient]}
+                    style={[styles.deepYellowOrangGradient]}
                     colors={['#EA173B', '#FFC100']}
                     start={{ x: 0.5, y: 0 }}
                     end={{ x: 0.5, y: 1 }}
@@ -156,7 +155,7 @@ const DeepDiveSettingsScreen = ({ setSelectedDeepDiveScreen, selectedDeepDiveScr
 };
 
 const createDeepDiveAboutStyles = (dimensions) => StyleSheet.create({
-    deepOrangeGradient: {
+    deepYellowOrangGradient: {
         left: 0,
         right: 0,
         top: 0,
@@ -172,7 +171,7 @@ const createDeepDiveAboutStyles = (dimensions) => StyleSheet.create({
             height: dimensions.height * 0.01
         },
     },
-    gradientButtonsStyles: {
+    deepGradientButtonsStyles: {
         width: dimensions.width * 0.17,
         height: dimensions.width * 0.17,
         justifyContent: 'center',

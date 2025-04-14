@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import {
   View,
-  Text,
+  StyleSheet,
   TouchableOpacity,
   Image,
+  Keyboard,
   Dimensions,
   SafeAreaView,
-  StyleSheet,
   TouchableWithoutFeedback,
-  Keyboard,
+  Text,
 } from 'react-native';
 import DeepDiveAboutScreen from './DeepDiveAboutScreen';
+import Sound from 'react-native-sound';
 
 import LinearGradient from 'react-native-linear-gradient';
 import DeepDiveSettingsScreen from './DeepDiveSettingsScreen';
@@ -18,6 +19,7 @@ import DeepDiveShopScreen from './DeepDiveShopScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DeepDiveGameScreen from './DeepDiveGameScreen';
 import DeepDiveScoresScreen from './DeepDiveScoresScreen';
+import { useAudio } from '../context/AudioContext';
 
 const deepBackgrounds = [
   {
@@ -61,6 +63,89 @@ const HomeScreen = () => {
   const [selectedDeepBackground, setSelectedDeepBackground] = useState(deepBackgrounds[0].deepBg);
   const [userFishesAmount, setUserFishesAmount] = useState(0);
   const [selectedFishesSkin, setSelectedFishSkin] = useState(1);
+
+  const [isSoundEnabled, setSoundEnabled] = useState(true);
+  const [backgroundMusic, setBackgroundMusic] = useState(true);
+  const { volume } = useAudio();
+  const [indexOfTheCurrentDeepTrack, setIdexOfTheCurrentDeepTrack] = useState(0);
+  const [deepSound, setDeepSound] = useState(null);
+
+  useEffect(() => {
+    const loadSoundEnabledSetting = async () => {
+      try {
+        const soundEnabledValue = await AsyncStorage.getItem('isSoundEnabled');
+        if (soundEnabledValue !== null) {
+          setSoundEnabled(JSON.parse(soundEnabledValue));
+        }
+      } catch (error) {
+        console.error('Error loading sound enabled setting:', error);
+      }
+    };
+    loadSoundEnabledSetting();
+  }, []);
+
+  const deepTracks = ['melody.wav', 'melody.wav'];
+
+  useEffect(() => {
+    playDeepTracks(indexOfTheCurrentDeepTrack);
+
+    return () => {
+      if (deepSound) {
+        deepSound.stop(() => {
+          deepSound.release();
+        });
+      }
+    };
+  }, [indexOfTheCurrentDeepTrack]);
+
+  useEffect(() => {
+    if (deepSound) {
+      deepSound.setVolume(volume);
+    }
+  }, [volume]);
+
+  const playDeepTracks = (index) => {
+    if (deepSound) {
+      deepSound.stop(() => {
+        deepSound.release();
+      });
+    }
+
+    const newDeepSound = new Sound(deepTracks[index], Sound.MAIN_BUNDLE, (error) => {
+      if (error) {
+        console.log('Помилка завантаження треку:', error);
+        return;
+      }
+      newDeepSound.setVolume(volume);
+      newDeepSound.play((success) => {
+        if (success) {
+          setIdexOfTheCurrentDeepTrack((prevIndex) => (prevIndex + 1) % deepTracks.length);
+        } else {
+          console.log('Помилка відтворення треку');
+        }
+      });
+      setDeepSound(newDeepSound);
+    });
+  };
+
+
+  useEffect(() => {
+    const setVolumeBasedOnMusicEnabled = async () => {
+      try {
+        const musicValue = await AsyncStorage.getItem('backgroundMusic');
+        if (musicValue !== null) {
+          const backgroundMusic = JSON.parse(musicValue);
+          if (deepSound) {
+            deepSound.setVolume(backgroundMusic ? 1 : 0);
+          }
+        }
+      } catch (error) {
+        console.error("Error setting volume based on music enabled:", error);
+      }
+    };
+
+    setVolumeBasedOnMusicEnabled();
+  }, [deepSound, backgroundMusic]);
 
   useEffect(() => {
     const loadHomeData = async () => {
@@ -141,14 +226,14 @@ const HomeScreen = () => {
               marginTop: dimensions.height * 0.01,
             }}>
               <TouchableOpacity
-                style={styles.gradientButtonsStyles}
+                style={styles.deepGradientButtonsStyles}
 
                 onPress={() => {
                   setSelectedDeepDiveScreen('AboutDeepDive');
                 }}
               >
                 <LinearGradient
-                  style={[styles.deepOrangeGradient, {
+                  style={[styles.deepYellowOranGradient, {
                   }]}
                   colors={['#EA173B', '#FFC100']}
                   start={{ x: 0.5, y: 0 }}
@@ -197,14 +282,14 @@ const HomeScreen = () => {
               </View>
 
               <TouchableOpacity
-                style={styles.gradientButtonsStyles}
+                style={styles.deepGradientButtonsStyles}
 
                 onPress={() => {
                   setSelectedDeepDiveScreen('DeepDiveSettings');
                 }}
               >
                 <LinearGradient
-                  style={[styles.deepOrangeGradient, {
+                  style={[styles.deepYellowOranGradient, {
                   }]}
                   colors={['#EA173B', '#FFC100']}
                   start={{ x: 0.5, y: 0 }}
@@ -231,13 +316,13 @@ const HomeScreen = () => {
               resizeMode='contain'
             />
 
-            <TouchableOpacity style={[styles.gradientButtonsStyles, { marginTop: dimensions.height * 0.07 }]}
+            <TouchableOpacity style={[styles.deepGradientButtonsStyles, { marginTop: dimensions.height * 0.07 }]}
               onPress={() => {
                 setSelectedDeepDiveScreen('DeepDiveGame');
               }}
             >
               <LinearGradient
-                style={[styles.deepOrangeGradient, {
+                style={[styles.deepYellowOranGradient, {
                 }]}
                 colors={['#EA173B', '#FFC100']}
                 start={{ x: 0.5, y: 0 }}
@@ -263,14 +348,14 @@ const HomeScreen = () => {
                     setSelectedDeepDiveScreen(item);
                   }}
                   key={item}
-                  style={[styles.gradientButtonsStyles, {
+                  style={[styles.deepGradientButtonsStyles, {
                     width: dimensions.width * 0.85,
                     height: dimensions.width * 0.14,
                     marginTop: dimensions.height * 0.015,
                   }]}
                 >
                   <LinearGradient
-                    style={[styles.deepOrangeGradient, {
+                    style={[styles.deepYellowOranGradient, {
                     }]}
                     colors={['#EA173B', '#FFC100']}
                     start={{ x: 0.5, y: 0 }}
@@ -294,13 +379,15 @@ const HomeScreen = () => {
         ) : selectedDeepDiveScreen === 'AboutDeepDive' ? (
           <DeepDiveAboutScreen setSelectedDeepDiveScreen={setSelectedDeepDiveScreen} />
         ) : selectedDeepDiveScreen === 'DeepDiveSettings' ? (
-          <DeepDiveSettingsScreen setSelectedDeepDiveScreen={setSelectedDeepDiveScreen} selectedDeepDiveScreen={selectedDeepDiveScreen} />
+          <DeepDiveSettingsScreen setSelectedDeepDiveScreen={setSelectedDeepDiveScreen} selectedDeepDiveScreen={selectedDeepDiveScreen} backgroundMusic={backgroundMusic} setBackgroundMusic={setBackgroundMusic} />
         ) : selectedDeepDiveScreen === 'Shop' ? (
-          <DeepDiveShopScreen setSelectedDeepDiveScreen={setSelectedDeepDiveScreen} selectedDeepBackground={selectedDeepBackground} setSelectedDeepBackground={setSelectedDeepBackground} deepBackgrounds={deepBackgrounds} fishSkins={fishSkins} setSelectedFishSkin={setSelectedFishSkin} userFishesAmount={userFishesAmount} setUserFishesAmount={setUserFishesAmount}/>
+          <DeepDiveShopScreen setSelectedDeepDiveScreen={setSelectedDeepDiveScreen} selectedDeepBackground={selectedDeepBackground} setSelectedDeepBackground={setSelectedDeepBackground} deepBackgrounds={deepBackgrounds} fishSkins={fishSkins} setSelectedFishSkin={setSelectedFishSkin} userFishesAmount={userFishesAmount} setUserFishesAmount={setUserFishesAmount} />
         ) : selectedDeepDiveScreen === 'DeepDiveGame' ? (
-          <DeepDiveGameScreen setSelectedDeepDiveScreen={setSelectedDeepDiveScreen} selectedDeepBackground={selectedDeepBackground} setSelectedDeepBackground={setSelectedDeepBackground} deepBackgrounds={deepBackgrounds} fishSkins={fishSkins} setSelectedFishSkin={setSelectedFishSkin} userFishesAmount={userFishesAmount} setUserFishesAmount={setUserFishesAmount}/>
+          <DeepDiveGameScreen setSelectedDeepDiveScreen={setSelectedDeepDiveScreen} selectedDeepBackground={selectedDeepBackground} setSelectedDeepBackground={setSelectedDeepBackground} deepBackgrounds={deepBackgrounds} fishSkins={fishSkins} setSelectedFishSkin={setSelectedFishSkin} userFishesAmount={userFishesAmount} setUserFishesAmount={setUserFishesAmount} 
+            isSoundEnabled={isSoundEnabled} setSoundEnabled={setSoundEnabled} selectedFishesSkin={selectedFishesSkin}
+          />
         ) : selectedDeepDiveScreen === 'Score' ? (
-          <DeepDiveScoresScreen setSelectedDeepDiveScreen={setSelectedDeepDiveScreen} userFishesAmount={userFishesAmount} setUserFishesAmount={setUserFishesAmount}/>
+          <DeepDiveScoresScreen setSelectedDeepDiveScreen={setSelectedDeepDiveScreen} userFishesAmount={userFishesAmount} setUserFishesAmount={setUserFishesAmount} />
         ) : null}
       </View>
     </TouchableWithoutFeedback>
@@ -308,7 +395,7 @@ const HomeScreen = () => {
 };
 
 const createDeepDiveStyles = (dimensions) => StyleSheet.create({
-  deepOrangeGradient: {
+  deepYellowOranGradient: {
     left: 0,
     right: 0,
     top: 0,
@@ -324,7 +411,7 @@ const createDeepDiveStyles = (dimensions) => StyleSheet.create({
       height: dimensions.height * 0.01
     },
   },
-  gradientButtonsStyles: {
+  deepGradientButtonsStyles: {
     width: dimensions.width * 0.17,
     height: dimensions.width * 0.17,
     justifyContent: 'center',

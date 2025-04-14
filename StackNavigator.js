@@ -9,6 +9,7 @@ import { UserProvider, UserContext } from './src/context/UserContext';
 import { Provider } from 'react-redux';
 import store from './src/redux/store';
 import DeepLoadingDiveScreen from './src/screens/DeepLoadingDiveScreen';
+import { AudioProvider } from './src/context/AudioContext';
 
 
 const Stack = createNativeStackNavigator();
@@ -28,17 +29,19 @@ const DeepDiveStack = () => {
 };
 
 const AppNavigator = () => {
- 
 
-  
+
+
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={'LoadingDeepDivingScreen'}>
-        <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="DeepDiveOnboardingScreen" component={DeepDiveOnboardingScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="LoadingDeepDivingScreen" component={DeepLoadingDiveScreen} options={{ headerShown: false }} />
-      </Stack.Navigator>
+      <AudioProvider>
+        <Stack.Navigator initialRouteName={'LoadingDeepDivingScreen'}>
+          <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="DeepDiveOnboardingScreen" component={DeepDiveOnboardingScreen} options={{ headerShown: false }} />
+          <Stack.Screen name="LoadingDeepDivingScreen" component={DeepLoadingDiveScreen} options={{ headerShown: false }} />
+        </Stack.Navigator>
+      </AudioProvider>
     </NavigationContainer>
   );
 };

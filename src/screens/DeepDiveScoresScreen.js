@@ -8,8 +8,6 @@ import {
     StyleSheet,
     TouchableOpacity,
     Image,
-    Switch,
-    Linking,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -35,14 +33,10 @@ const DeepDiveScoresScreen = ({ setSelectedDeepDiveScreen, selectedDeepDiveScree
         loadSettings();
     }, []);
 
-    useEffect(() => {
-        console.log('Scores:', scores);
-    })
-
     return (
         <SafeAreaView style={{ width: dimensions.width }}>
             <View
-                style={[styles.gradientButtonsStyles, {
+                style={[styles.deepGradientButtonsStyles, {
                     width: dimensions.width * 0.91,
                     height: dimensions.width * 0.14,
                     marginTop: dimensions.height * 0.015,
@@ -53,7 +47,7 @@ const DeepDiveScoresScreen = ({ setSelectedDeepDiveScreen, selectedDeepDiveScree
                 }]}
             >
                 <LinearGradient
-                    style={[styles.deepOrangeGradient]}
+                    style={[styles.deepYellowOrangGradient]}
                     colors={['#EA173B', '#FFC100']}
                     start={{ x: 0.5, y: 0 }}
                     end={{ x: 0.5, y: 1 }}
@@ -95,7 +89,7 @@ const DeepDiveScoresScreen = ({ setSelectedDeepDiveScreen, selectedDeepDiveScree
                             setSelectedDeepGameCategory(item);
                         }}
                         key={item}
-                        style={[styles.gradientButtonsStyles, {
+                        style={[styles.deepGradientButtonsStyles, {
                             width: dimensions.width * 0.28,
                             height: dimensions.width * 0.19,
                             marginTop: dimensions.height * 0.015,
@@ -107,7 +101,7 @@ const DeepDiveScoresScreen = ({ setSelectedDeepDiveScreen, selectedDeepDiveScree
                     >
                         {selectedDeepGameCategory === item && (
                             <LinearGradient
-                                style={[styles.deepOrangeGradient, {
+                                style={[styles.deepYellowOrangGradient, {
                                 }]}
                                 colors={['#EA173B', '#FFC100']}
                                 start={{ x: 0.5, y: 0 }}
@@ -128,7 +122,6 @@ const DeepDiveScoresScreen = ({ setSelectedDeepDiveScreen, selectedDeepDiveScree
                         </Text>
                     </TouchableOpacity>
                 ))}
-
             </View>
 
             <View style={{ marginTop: dimensions.height * 0.03 }}></View>
@@ -202,7 +195,7 @@ const DeepDiveScoresScreen = ({ setSelectedDeepDiveScreen, selectedDeepDiveScree
 };
 
 const createDeepDiveAboutStyles = (dimensions) => StyleSheet.create({
-    deepOrangeGradient: {
+    deepYellowOrangGradient: {
         left: 0,
         right: 0,
         top: 0,
@@ -218,7 +211,7 @@ const createDeepDiveAboutStyles = (dimensions) => StyleSheet.create({
             height: dimensions.height * 0.01
         },
     },
-    gradientButtonsStyles: {
+    deepGradientButtonsStyles: {
         width: dimensions.width * 0.17,
         height: dimensions.width * 0.17,
         justifyContent: 'center',

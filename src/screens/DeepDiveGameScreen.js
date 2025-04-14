@@ -3,8 +3,6 @@ import { View, Animated, Text, TouchableOpacity, Dimensions, Image, SafeAreaView
 import LinearGradient from 'react-native-linear-gradient';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Sound from 'react-native-sound';
-import { useAudio } from '../context/AudioContext';
-
 
 const fontPixelifySansRegular = 'PixelifySans-Regular';
 const fontPlay = 'Play-Regular';
@@ -26,11 +24,30 @@ const fishes = {
       skin: require('../assets/images/fishes/fish1.png'),
       move: 'up',
     },
-
   ]
 }
 
-const DeepDiveGameScreen = ({ setSelectedDeepDiveScreen, userFishesAmount, setUserFishesAmount }) => {
+const proFishes = {
+  simple: [
+    {
+      id: 1,
+      skin: require('../assets/images/fishes/fish5.png'),
+      move: 'left',
+    },
+    {
+      id: 2,
+      skin: require('../assets/images/fishes/fish6.png'),
+      move: 'right',
+    },
+    {
+      id: 3,
+      skin: require('../assets/images/fishes/fish4.png'),
+      move: 'up',
+    },
+  ]
+}
+
+const DeepDiveGameScreen = ({ setSelectedDeepDiveScreen, userFishesAmount, setUserFishesAmount, isSoundEnabled, selectedFishesSkin }) => {
   const [dimensions, setDimensions] = useState(Dimensions.get('window'));
   const styles = createDeepDiveStyles(dimensions);
   const [isDeepDiveStarted, setIsDeepDiveStarted] = useState(false);
@@ -44,9 +61,16 @@ const DeepDiveGameScreen = ({ setSelectedDeepDiveScreen, userFishesAmount, setUs
 
   const generateNextFish = () => {
     let newFish;
-    do {
-      newFish = fishes.simple[Math.floor(Math.random() * fishes.simple.length)];
-    } while (currentFishRef.current && newFish.id === currentFishRef.current.id);
+
+    if (selectedFishesSkin === 1) {
+      do {
+        newFish = fishes.simple[Math.floor(Math.random() * fishes.simple.length)];
+      } while (currentFishRef.current && newFish.id === currentFishRef.current.id);
+    } else {
+      do {
+        newFish = proFishes.simple[Math.floor(Math.random() * proFishes.simple.length)];
+      } while (currentFishRef.current && newFish.id === currentFishRef.current.id);
+    }
     currentFishRef.current = newFish;
     setCurrentFish(newFish);
   };
@@ -79,8 +103,8 @@ const DeepDiveGameScreen = ({ setSelectedDeepDiveScreen, userFishesAmount, setUs
         console.log('Swipe direction detected:', direction);
         if (currentFishRef.current && direction === currentFishRef.current.move) {
           console.log('Correct swipe! Expected:', currentFishRef.current.move);
-          setFishScore(prevScore => prevScore + 1); // Add 1 to score for a correct swipe
-          playSound(sound);
+          setFishScore(prevScore => prevScore + 1);
+          if (isSoundEnabled) playSound(sound);
         } else {
           console.log('Incorrect swipe. Expected:', currentFishRef.current ? currentFishRef.current.move : 'none');
         }
@@ -131,8 +155,6 @@ const DeepDiveGameScreen = ({ setSelectedDeepDiveScreen, userFishesAmount, setUs
   }, [userFishesAmount]);
 
 
-
-  // Add a ref to track the current game status updated on change:
   const gameActiveRef = useRef(isDeepDiveStarted);
   useEffect(() => {
     gameActiveRef.current = isDeepDiveStarted;
@@ -144,7 +166,7 @@ const DeepDiveGameScreen = ({ setSelectedDeepDiveScreen, userFishesAmount, setUs
       timerWidth.setValue(dimensions.width * 0.9);
       animation = Animated.timing(timerWidth, {
         toValue: 0,
-        duration: 5000,
+        duration: 50000,
         useNativeDriver: false,
       });
       animation.start(() => {
@@ -176,7 +198,7 @@ const DeepDiveGameScreen = ({ setSelectedDeepDiveScreen, userFishesAmount, setUs
       }
     };
   }, [isDeepDiveStarted, dimensions.width]);
-  
+
   const handleSaveResult = async (scoreResult) => {
     try {
       const storedScores = await AsyncStorage.getItem('scores');
@@ -227,7 +249,7 @@ const DeepDiveGameScreen = ({ setSelectedDeepDiveScreen, userFishesAmount, setUs
             else {
               setIsDeepDiveStarted(false);
               setModalVisible(false);
-              setFishScore(0);
+              // setFishScore(0);
             }
           }}>
             <Image
@@ -269,7 +291,7 @@ const DeepDiveGameScreen = ({ setSelectedDeepDiveScreen, userFishesAmount, setUs
               textAlign: 'center',
               fontWeight: 700,
               fontFamily: fontPlay,
-              fontSize: dimensions.width * 0.055,
+              fontSize: dimensions.width * 0.05,
               color: '#fff',
               marginRight: dimensions.width * 0.025,
             }}>

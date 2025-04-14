@@ -72,7 +72,7 @@ const DeepDiveOnboardingScreen = () => {
 
       <TouchableOpacity
         onPress={() => {
-          navigation.replace('LoadingDeepDivingScreen');
+          navigation.replace('Home');
         }}
         style={[styles.gradientButtonsStyles, {
           width: dimensions.width * 0.85,

@@ -76,6 +76,8 @@ const DeepDiveShopScreen = ({ setSelectedDeepDiveScreen, deepBackgrounds, fishSk
 
   const deepFishSkinsAction = async (propsFish) => {
     if (ownedFishSkins.includes(propsFish.id)) {
+      setSelectedFishSkin(propsFish.id);
+      AsyncStorage.setItem('selectedFishSkin', JSON.stringify(propsFish.id));
     } else {
       if (userFishesAmount >= 50) {
         Alert.alert('Buy Skins', 'Do you want to buy this fish skins?', [
@@ -140,7 +142,7 @@ const DeepDiveShopScreen = ({ setSelectedDeepDiveScreen, deepBackgrounds, fishSk
         alignSelf: 'center',
       }}>
         <View
-          style={[styles.gradientButtonsStyles, {
+          style={[styles.deepGradientButtonsStyles, {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'space-between',
@@ -151,7 +153,7 @@ const DeepDiveShopScreen = ({ setSelectedDeepDiveScreen, deepBackgrounds, fishSk
           }]}
         >
           <LinearGradient
-            style={[styles.deepOrangeGradient]}
+            style={[styles.deepYellowOranGradient]}
             colors={['#EA173B', '#FFC100']}
             start={{ x: 0.5, y: 0 }}
             end={{ x: 0.5, y: 1 }}
@@ -181,15 +183,15 @@ const DeepDiveShopScreen = ({ setSelectedDeepDiveScreen, deepBackgrounds, fishSk
         </View>
 
         <View
-          style={[styles.gradientButtonsStyles, {
+          style={[styles.deepGradientButtonsStyles, {
             flexDirection: 'row',
             alignItems: 'center',
-            justifyContent: 'space-between',
+            justifyContent: 'center',
 
             width: dimensions.width * 0.25,
             height: dimensions.width * 0.14,
             marginTop: dimensions.height * 0.015,
-            paddingHorizontal: dimensions.width * 0.05,
+            paddingHorizontal: dimensions.width * 0.01,
             backgroundColor: '#003186',
           }]}
         >
@@ -198,7 +200,7 @@ const DeepDiveShopScreen = ({ setSelectedDeepDiveScreen, deepBackgrounds, fishSk
               textAlign: 'center',
               fontWeight: 700,
               fontFamily: fontPlay,
-              fontSize: dimensions.width * 0.06,
+              fontSize: dimensions.width * 0.05,
               color: '#fff',
               marginRight: dimensions.width * 0.025,
             }}>
@@ -265,7 +267,7 @@ const DeepDiveShopScreen = ({ setSelectedDeepDiveScreen, deepBackgrounds, fishSk
               }}>
               <View style={styles.paginatorsStyles}>
                 <LinearGradient
-                  style={[styles.deepOrangeGradient]}
+                  style={[styles.deepYellowOranGradient]}
                   colors={['#EA173B', '#FFC100']}
                   start={{ x: 0.5, y: 0 }}
                   end={{ x: 0.5, y: 1 }}
@@ -322,7 +324,7 @@ const DeepDiveShopScreen = ({ setSelectedDeepDiveScreen, deepBackgrounds, fishSk
           >
             {bgCurrentIndex === paginatorIndex && (
               <LinearGradient
-                style={[styles.deepOrangeGradient]}
+                style={[styles.deepYellowOranGradient]}
                 colors={['#EA173B', '#FFC100']}
                 start={{ x: 0.5, y: 0 }}
                 end={{ x: 0.5, y: 1 }}
@@ -367,7 +369,7 @@ const DeepDiveShopScreen = ({ setSelectedDeepDiveScreen, deepBackgrounds, fishSk
               }}>
               <View style={styles.paginatorsStyles}>
                 <LinearGradient
-                  style={[styles.deepOrangeGradient]}
+                  style={[styles.deepYellowOranGradient]}
                   colors={['#EA173B', '#FFC100']}
                   start={{ x: 0.5, y: 0 }}
                   end={{ x: 0.5, y: 1 }}
@@ -427,7 +429,7 @@ const DeepDiveShopScreen = ({ setSelectedDeepDiveScreen, deepBackgrounds, fishSk
           >
             {fishSkinCurrentIndex === paginatorIndex && (
               <LinearGradient
-                style={[styles.deepOrangeGradient]}
+                style={[styles.deepYellowOranGradient]}
                 colors={['#EA173B', '#FFC100']}
                 start={{ x: 0.5, y: 0 }}
                 end={{ x: 0.5, y: 1 }}
@@ -436,14 +438,12 @@ const DeepDiveShopScreen = ({ setSelectedDeepDiveScreen, deepBackgrounds, fishSk
           </View>
         ))}
       </View>
-
-
     </SafeAreaView>
   );
 };
 
 const createDeepDiveStyles = (dimensions) => StyleSheet.create({
-  deepOrangeGradient: {
+  deepYellowOranGradient: {
     left: 0,
     right: 0,
     top: 0,
@@ -459,7 +459,7 @@ const createDeepDiveStyles = (dimensions) => StyleSheet.create({
       height: dimensions.height * 0.01
     },
   },
-  gradientButtonsStyles: {
+  deepGradientButtonsStyles: {
     width: dimensions.width * 0.17,
     height: dimensions.width * 0.17,
     justifyContent: 'center',

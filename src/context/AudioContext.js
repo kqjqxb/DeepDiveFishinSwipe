@@ -7,17 +7,17 @@ export const AudioProvider = ({ children }) => {
   const [volume, setVolume] = useState(1.0); 
 
   useEffect(() => {
-    const loadStoredVolume = async () => {
+    const loadDeepStoredVolume = async () => {
       try {
-        const storedVolumeHere = await AsyncStorage.getItem('volume');
-        if (storedVolumeHere !== null) {
-          setVolume(parseFloat(storedVolumeHere));
+        const storedDeepVolumeHere = await AsyncStorage.getItem('volume');
+        if (storedDeepVolumeHere !== null) {
+          setVolume(parseFloat(storedDeepVolumeHere));
         }
       } catch (error) {
         console.log('Error loading the volume:', error);
       }
     };
-    loadStoredVolume();
+    loadDeepStoredVolume();
   }, []);
 
   const handleChangeThisVolume = async (thisVolume) => {

@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { Dimensions, Image, View, ActivityIndicator, } from 'react-native';
+import { Dimensions, Image, View, } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import { useDispatch } from 'react-redux';
 
@@ -56,9 +56,9 @@ const DeepLoadingDiveScreen = () => {
     <View style={{
       alignItems: 'center',
       justifyContent: 'center',
+      zIndex: 1,
       flex: 1,
       width: '100%',
-      zIndex: 1,
     }}>
       <Image
         source={require('../assets/images/loaderImage.png')}
