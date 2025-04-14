@@ -6,14 +6,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const fontPixelifySansRegular = 'PixelifySans-Regular';
 const fontPlay = 'Play-Regular';
 
-const DeepDiveShopScreen = ({ setSelectedDeepDiveScreen, deepBackgrounds, fishSkins, setSelectedFishSkin, setSelectedDeepBackground }) => {
+const DeepDiveShopScreen = ({ setSelectedDeepDiveScreen, deepBackgrounds, fishSkins, setSelectedFishSkin, setSelectedDeepBackground, userFishesAmount, setUserFishesAmount }) => {
   const [dimensions, setDimensions] = useState(Dimensions.get('window'));
   const [bgCurrentIndex, setBgCurrentIndex] = useState(0);
   const [fishSkinCurrentIndex, setFishSkinCurrentIndex] = useState(0);
   const styles = createDeepDiveStyles(dimensions);
   const [ownedBackgrounds, setOwnedBackgrounds] = useState([1]);
   const [ownedFishSkins, setOwnedFishSkins] = useState([1]);
-  const [userFishesAmount, setUserFishesAmount] = useState(0);
 
 
   useEffect(() => {
@@ -21,7 +20,6 @@ const DeepDiveShopScreen = ({ setSelectedDeepDiveScreen, deepBackgrounds, fishSk
       try {
         const storedBackgrounds = await AsyncStorage.getItem('ownedBackgrounds');
         const storedFishSkins = await AsyncStorage.getItem('ownedFishSkins');
-        const storedUserFishesAmount = await AsyncStorage.getItem('userFishesAmount');
 
         if (storedBackgrounds !== null) {
           setOwnedBackgrounds(JSON.parse(storedBackgrounds));
@@ -35,13 +33,6 @@ const DeepDiveShopScreen = ({ setSelectedDeepDiveScreen, deepBackgrounds, fishSk
         } else {
           setOwnedFishSkins([1]);
           await AsyncStorage.setItem('ownedFishSkins', JSON.stringify([1]));
-        }
-
-        if (storedUserFishesAmount !== null) {
-          setUserFishesAmount(JSON.parse(storedUserFishesAmount));
-        } else {
-          setUserFishesAmount(0);
-          await AsyncStorage.setItem('userFishesAmount', JSON.stringify(0));
         }
       } catch (error) {
         console.error('Error loading stored data', error);

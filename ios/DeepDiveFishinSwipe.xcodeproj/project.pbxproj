@@ -16,6 +16,8 @@
 		98F071D5E56640D7AD5D6A01 /* PixelifySans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 449FEDE167924EC2A42CFDB9 /* PixelifySans-SemiBold.ttf */; };
 		A43EE9B4DB9B4AF09E9D196B /* Play-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F514D0206ADA493B9C130FAE /* Play-Bold.ttf */; };
 		A6D12B1E72194854BB6EDAC6 /* PixelifySans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0FB0E93FA7FB4DD08C3C22BD /* PixelifySans-Medium.ttf */; };
+		CEC2492A2DACF2DE00F1D070 /* single-beep.wav in Resources */ = {isa = PBXBuildFile; fileRef = CEC249292DACF2DE00F1D070 /* single-beep.wav */; };
+		CEC2492C2DACF2FE00F1D070 /* melody.wav in Resources */ = {isa = PBXBuildFile; fileRef = CEC2492B2DACF2FE00F1D070 /* melody.wav */; };
 		D87D785EBA57F6616CAA04DE /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB81A68108700A75B9A /* PrivacyInfo.xcprivacy */; };
 		E2DE5A62313643AEB4D6CD6B /* PixelifySans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3CC4EE8A59394FE59ABE18DE /* PixelifySans-Regular.ttf */; };
 /* End PBXBuildFile section */
@@ -34,6 +36,8 @@
 		761780EC2CA45674006654EE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppDelegate.swift; path = DeepDiveFishinSwipe/AppDelegate.swift; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = DeepDiveFishinSwipe/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		BCEE13FDE7B44261906CD003 /* Play-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Play-Regular.ttf"; path = "../src/assets/fonts/Play-Regular.ttf"; sourceTree = "<group>"; };
+		CEC249292DACF2DE00F1D070 /* single-beep.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "single-beep.wav"; sourceTree = "<group>"; };
+		CEC2492B2DACF2FE00F1D070 /* melody.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = melody.wav; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		EEA80BA697D44FACB97C37C1 /* PixelifySans-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "PixelifySans-Bold.ttf"; path = "../src/assets/fonts/PixelifySans-Bold.ttf"; sourceTree = "<group>"; };
 		F514D0206ADA493B9C130FAE /* Play-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Play-Bold.ttf"; path = "../src/assets/fonts/Play-Bold.ttf"; sourceTree = "<group>"; };
@@ -75,6 +79,8 @@
 		6E6B1DD731934EF881A160AB /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CEC2492B2DACF2FE00F1D070 /* melody.wav */,
+				CEC249292DACF2DE00F1D070 /* single-beep.wav */,
 				EEA80BA697D44FACB97C37C1 /* PixelifySans-Bold.ttf */,
 				0FB0E93FA7FB4DD08C3C22BD /* PixelifySans-Medium.ttf */,
 				3CC4EE8A59394FE59ABE18DE /* PixelifySans-Regular.ttf */,
@@ -188,9 +194,11 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				D87D785EBA57F6616CAA04DE /* PrivacyInfo.xcprivacy in Resources */,
 				61254EF0B1EF4D33AC18AB82 /* PixelifySans-Bold.ttf in Resources */,
+				CEC2492A2DACF2DE00F1D070 /* single-beep.wav in Resources */,
 				A6D12B1E72194854BB6EDAC6 /* PixelifySans-Medium.ttf in Resources */,
 				E2DE5A62313643AEB4D6CD6B /* PixelifySans-Regular.ttf in Resources */,
 				98F071D5E56640D7AD5D6A01 /* PixelifySans-SemiBold.ttf in Resources */,
+				CEC2492C2DACF2FE00F1D070 /* melody.wav in Resources */,
 				A43EE9B4DB9B4AF09E9D196B /* Play-Bold.ttf in Resources */,
 				8F18FE86D1894E39ACAF0DFA /* Play-Regular.ttf in Resources */,
 			);

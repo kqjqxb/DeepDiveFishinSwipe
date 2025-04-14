@@ -17,6 +17,7 @@ import DeepDiveSettingsScreen from './DeepDiveSettingsScreen';
 import DeepDiveShopScreen from './DeepDiveShopScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DeepDiveGameScreen from './DeepDiveGameScreen';
+import DeepDiveScoresScreen from './DeepDiveScoresScreen';
 
 const deepBackgrounds = [
   {
@@ -92,7 +93,7 @@ const HomeScreen = () => {
       }
     };
     loadHomeData();
-  }, []);
+  }, [setSelectedDeepDiveScreen]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -295,9 +296,11 @@ const HomeScreen = () => {
         ) : selectedDeepDiveScreen === 'DeepDiveSettings' ? (
           <DeepDiveSettingsScreen setSelectedDeepDiveScreen={setSelectedDeepDiveScreen} selectedDeepDiveScreen={selectedDeepDiveScreen} />
         ) : selectedDeepDiveScreen === 'Shop' ? (
-          <DeepDiveShopScreen setSelectedDeepDiveScreen={setSelectedDeepDiveScreen} selectedDeepBackground={selectedDeepBackground} setSelectedDeepBackground={setSelectedDeepBackground} deepBackgrounds={deepBackgrounds} fishSkins={fishSkins} setSelectedFishSkin={setSelectedFishSkin}/>
+          <DeepDiveShopScreen setSelectedDeepDiveScreen={setSelectedDeepDiveScreen} selectedDeepBackground={selectedDeepBackground} setSelectedDeepBackground={setSelectedDeepBackground} deepBackgrounds={deepBackgrounds} fishSkins={fishSkins} setSelectedFishSkin={setSelectedFishSkin} userFishesAmount={userFishesAmount} setUserFishesAmount={setUserFishesAmount}/>
         ) : selectedDeepDiveScreen === 'DeepDiveGame' ? (
-          <DeepDiveGameScreen setSelectedDeepDiveScreen={setSelectedDeepDiveScreen} selectedDeepBackground={selectedDeepBackground} setSelectedDeepBackground={setSelectedDeepBackground} deepBackgrounds={deepBackgrounds} fishSkins={fishSkins} setSelectedFishSkin={setSelectedFishSkin}/>
+          <DeepDiveGameScreen setSelectedDeepDiveScreen={setSelectedDeepDiveScreen} selectedDeepBackground={selectedDeepBackground} setSelectedDeepBackground={setSelectedDeepBackground} deepBackgrounds={deepBackgrounds} fishSkins={fishSkins} setSelectedFishSkin={setSelectedFishSkin} userFishesAmount={userFishesAmount} setUserFishesAmount={setUserFishesAmount}/>
+        ) : selectedDeepDiveScreen === 'Score' ? (
+          <DeepDiveScoresScreen setSelectedDeepDiveScreen={setSelectedDeepDiveScreen} userFishesAmount={userFishesAmount} setUserFishesAmount={setUserFishesAmount}/>
         ) : null}
       </View>
     </TouchableWithoutFeedback>
