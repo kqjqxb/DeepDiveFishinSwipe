@@ -134,7 +134,7 @@ const DeepDiveSettingsScreen = ({ setSelectedDeepDiveScreen, selectedDeepDiveScr
                 paddingHorizontal: dimensions.width * 0.05,
             }}
                 onPress={() => {
-                    Linking.openURL('https://google.com');
+                    Linking.openURL('https://www.termsfeed.com/live/70459072-7c95-4577-82b5-f303d5e1dc01');
                 }}
             >
                 <Text
