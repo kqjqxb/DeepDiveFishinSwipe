@@ -86,7 +86,8 @@ const DeepDiveScoresScreen = ({ setSelectedDeepDiveScreen, selectedDeepDiveScree
                 {['Quick Catch', 'Deep Drift', 'Endless Voyage'].map((item, index) => (
                     <TouchableOpacity
                         onPress={() => {
-                            setSelectedDeepGameCategory(item);
+                            // setSelectedDeepGameCategory(item);
+                            handleChangeDeepGameCategory(item);
                         }}
                         key={item}
                         style={[styles.deepGradientButtonsStyles, {

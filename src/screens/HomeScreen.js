@@ -55,7 +55,7 @@ const fontPixelifySansRegular = 'PixelifySans-Regular';
 const fontPlay = 'Play-Regular';
 
 const HomeScreen = () => {
-  const [dimensions, setDimensions] = useState(Dimensions.get('window'));
+  const dimensions = Dimensions.get('window');
   const [selectedDeepDiveScreen, setSelectedDeepDiveScreen] = useState('Home');
 
   const styles = createDeepDiveStyles(dimensions);

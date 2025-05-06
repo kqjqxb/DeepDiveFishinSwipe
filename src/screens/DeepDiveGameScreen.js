@@ -340,7 +340,8 @@ const DeepDiveGameScreen = ({ setSelectedDeepDiveScreen, userFishesAmount, setUs
             {['Quick Catch', 'Deep Drift', 'Endless Voyage'].map((item, index) => (
               <TouchableOpacity
                 onPress={() => {
-                  setSelectedDeepGameType(item);
+                  // setSelectedDeepGameType(item);
+                  setDeepDiveGameMode(item);
                 }}
                 key={item}
                 style={[styles.gradientButtonsStyles, {
