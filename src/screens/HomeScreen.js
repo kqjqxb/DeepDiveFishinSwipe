@@ -82,7 +82,7 @@ const HomeScreen = () => {
       }
     };
     loadSoundEnabledSetting();
-  }, []);
+  }, [selectedDeepDiveScreen]);
 
   const deepTracks = ['melody.wav', 'melody.wav'];
 

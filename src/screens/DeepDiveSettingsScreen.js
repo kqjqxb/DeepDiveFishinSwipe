@@ -36,7 +36,7 @@ const DeepDiveSettingsScreen = ({ setSelectedDeepDiveScreen, selectedDeepDiveScr
                 const bgMusicValue = await AsyncStorage.getItem('backgroundMusic');
                 if (bgMusicValue !== null) setBackgroundMusic(JSON.parse(bgMusicValue));
 
-                const soundsValue = await AsyncStorage.getItem('sounds');
+                const soundsValue = await AsyncStorage.getItem('isSoundEnabled');
                 if (soundsValue !== null) setSounds(JSON.parse(soundsValue));
 
                 const notificationsValue = await AsyncStorage.getItem('notifications');
@@ -93,7 +93,7 @@ const DeepDiveSettingsScreen = ({ setSelectedDeepDiveScreen, selectedDeepDiveScr
 
             {[
                 { label: 'Background Music', key: 'backgroundMusic', value: backgroundMusic, setter: setBackgroundMusic },
-                { label: 'Sounds', key: 'sounds', value: sounds, setter: setSounds },
+                { label: 'Sounds', key: 'isSoundEnabled', value: sounds, setter: setSounds },
                 { label: 'Notifications', key: 'notifications', value: notifications, setter: setNotifications },
             ].map((item, index) => (
                 <View key={index} style={{
